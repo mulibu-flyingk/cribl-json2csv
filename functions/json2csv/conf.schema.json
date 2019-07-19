@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "title": "",
+  "additionalProperties": false,
+  "properties": {
+    "keep": {
+      "title": "Keep Fields",
+      "description": "List of fields to keep, supports * wildcards.",
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
