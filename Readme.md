@@ -1,7 +1,7 @@
 # Cribl json2csv function
 
 - **Authors**:		Christoph Dittmann <mulibu.flyingk@gmail.com>
-- **Description**:	Extended Splunk Alert Manager with advanced reporting on alerts, workflows (modify assignee, status, severity) and auto-resolve features
+- **Description**:	extending Cribl LogStream with a function converting JSON data to CSV data
 - **Version**: 		v1.0.0
 - **License**:      MIT
 
