@@ -1,0 +1,12 @@
+{
+  "name": "json2csv",
+  "version": "0.0.1",
+  "description": "Convert json data to csv data",
+  "main": "index.js",
+  "author": "Christoph Dittmann",
+  "license": "MIT",
+  "dependencies": {
+    "json2csv": "^4.4.1"
+  },
+  "devDependencies": {}
+}

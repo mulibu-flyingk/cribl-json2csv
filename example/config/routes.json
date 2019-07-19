@@ -1,0 +1,158 @@
+﻿{
+  "id": "default",
+  "routes": [
+    {
+      "id": "KM9Pf6",
+      "name": "Sensitive Data",
+      "final": false,
+      "disabled": false,
+      "pipeline": "masking",
+      "description": "Mask Sensitive Data",
+      "clones": [
+        {
+          "index": "cribl-modified",
+          "source": "pii_ssn"
+        },
+        {
+          "index": "cribl-modified",
+          "source": "pii_cc"
+        },
+        {
+          "index": "cribl-modified",
+          "source": "encrypt"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='business_event'",
+      "output": "default"
+    },
+    {
+      "id": "be12ct",
+      "name": "KV to JSON",
+      "final": false,
+      "disabled": false,
+      "pipeline": "kv2json",
+      "description": "Convert KV Events to JSON",
+      "clones": [
+        {
+          "index": "cribl-modified",
+          "source": "pretty_autokv"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='business_event'",
+      "output": "default"
+    },
+    {
+      "id": "wBx0rY",
+      "name": "KV to CSV",
+      "final": false,
+      "disabled": false,
+      "pipeline": "kv2csv",
+      "description": "",
+      "clones": [
+        {
+          "index": "cribl-modified",
+          "source": "cribl_business_event_csv",
+          "sourcetype": "cribl:business_event:csv"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='business_event'",
+      "output": "default"
+    },
+    {
+      "id": "py0d5r",
+      "name": "Logs to Metrics",
+      "final": false,
+      "disabled": false,
+      "pipeline": "logs_to_metrics",
+      "description": "Convert Access Combined Logs to Splunk Metrics",
+      "clones": [
+        {
+          "index": "cribl-metrics"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='access_combined'",
+      "output": "default"
+    },
+    {
+      "id": "0nJxAA",
+      "name": "Sample and Filter",
+      "final": false,
+      "disabled": false,
+      "pipeline": "sample_and_filter",
+      "description": "Clean up voluminous weblog data for our needs",
+      "clones": [
+        {
+          "index": "cribl-modified",
+          "source": "smart_sample"
+        },
+        {
+          "index": "cribl-modified",
+          "source": "filter"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='access_combined'",
+      "output": "default"
+    },
+    {
+      "id": "ZLTc0g",
+      "name": "Enrich",
+      "final": false,
+      "disabled": false,
+      "pipeline": "enrich",
+      "description": "Use lookups to add context to events",
+      "clones": [
+        {
+          "index": "cribl-modified",
+          "source": "enrich"
+        },
+        {
+          "index": "cribl-modified",
+          "source": "indextimefields"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='access_combined'",
+      "output": "default"
+    },
+    {
+      "id": "mQEq5u",
+      "name": "JWT Decode",
+      "final": false,
+      "disabled": false,
+      "pipeline": "jwt_to_json",
+      "description": "Send auth failures with JWT to decode JWT",
+      "clones": [
+        {
+          "index": "cribl-modified"
+        }
+      ],
+      "filter": "index=='cribl' && sourcetype=='authfailed'",
+      "output": "default"
+    },
+    {
+      "id": "ioa1pg",
+      "name": "State Change",
+      "final": false,
+      "disabled": false,
+      "pipeline": "statechange",
+      "description": "Log only on state change",
+      "clones": [
+        {
+          "index": "cribl-modified"
+        }
+      ],
+      "filter": "sourcetype=='nagios'",
+      "output": "default"
+    },
+    {
+      "id": "OsuFhD",
+      "name": "Main Route",
+      "final": true,
+      "disabled": false,
+      "pipeline": "main",
+      "description": "Catchall for routing data through main pipeline",
+      "clones": [],
+      "filter": "true",
+      "output": "default"
+    }
+  ]
+}

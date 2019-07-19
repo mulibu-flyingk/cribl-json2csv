@@ -1,0 +1,86 @@
+﻿{
+  "id": "kv2csv",
+  "conf": {
+    "asyncFuncTimeout": 1000,
+    "output": "default",
+    "description": "Converting key value pairs to csv ouput",
+    "functions": [
+      {
+        "id": "serde",
+        "filter": "true",
+        "conf": {
+          "mode": "extract",
+          "type": "kvp",
+          "srcField": "_raw",
+          "remove": [
+            "AdapterName",
+            "Event",
+            "EventConversationID",
+            "JMSReplyTo",
+            "credits",
+            "meid",
+            "properties",
+            "social",
+            "timeToLive",
+            "MethodName",
+            "ReplyTo"
+          ],
+          "dstField": "newraw"
+        },
+        "description": "Convert key value pairs to JSON"
+      },
+      {
+        "id": "eval",
+        "filter": "true",
+        "conf": {
+          "add": [
+            {
+              "name": "_raw",
+              "value": "JSON.stringify(newraw)"
+            }
+          ],
+          "remove": [
+            "newraw"
+          ]
+        }
+      },
+      {
+        "id": "json2csv",
+        "filter": "true",
+        "conf": {
+          "keep": [
+            "timestamp",
+            "JMSCorrelationID",
+            "JMSMessageID",
+            "accountNumber",
+            "accountType",
+            "autoBillPayment",
+            "billingCycle",
+            "cardNumber",
+            "conversationId",
+            "esn",
+            "marketCity",
+            "marketState",
+            "marketZip",
+            "mdn",
+            "networkProviderName",
+            "orderNumber",
+            "orderType",
+            "phoneCode",
+            "phoneName",
+            "phoneType",
+            "planCode",
+            "planDescription",
+            "planName",
+            "planPrice",
+            "planType",
+            "quoteNumber",
+            "quotePriority",
+            "serviceName",
+            "userName"
+          ]
+        }
+      }
+    ]
+  }
+}

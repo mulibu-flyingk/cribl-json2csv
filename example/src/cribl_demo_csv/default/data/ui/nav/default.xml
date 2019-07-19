@@ -1,0 +1,4 @@
+<nav search_view="search">
+  <view name="convert_kv_input_to_csv_output" default='true' />
+  <view name="search" />
+</nav>

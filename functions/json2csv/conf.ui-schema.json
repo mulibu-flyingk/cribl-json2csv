@@ -1,0 +1,6 @@
+{
+  "keep": {
+    "ui:field": "Tags",
+    "ui:placeholder": "Field names"
+  }
+}
